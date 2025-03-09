@@ -183,10 +183,25 @@ fun placeMonkey(cageList: MutableList<String>, name: String): Int {
     println("+++ Putting $name into a cage")
     // YOUR CODE HERE
     for (i in 0..<cageList.size) {
-
         if (cageList[i] == EMPTY) {
-            cageList[i] = name
-            return i + 1
+            try {
+                if (!cageList[i - 1].contains("!")) {
+                    try {
+                        if (!cageList[i + 1].contains("!")) {
+                            cageList[i] = name
+                            return i + 1
+                        }
+                    } catch (e: IndexOutOfBoundsException) {
+                        cageList[i] = name
+                        return i + 1
+                    }
+                }
+            } catch (e: IndexOutOfBoundsException) {
+                if (!cageList[i + 1].contains("!")) {
+                    cageList[i] = name
+                    return i + 1
+                }
+            }
         }
 
     }
@@ -214,11 +229,22 @@ fun placeViolentMonkey(cageList: MutableList<String>, name: String): Int {
     for (i in 0..<cageList.size) {
 
         if (cageList[i] == EMPTY) {
-            if (cageList[i + 1] == EMPTY) {
-                //Try each to check for cage 1 or 8
+            try {
+                if (cageList[i + 1] == EMPTY) {
+                    try {
+                        if (cageList[i - 1] == EMPTY) {
+                            cageList[i] = "!$name"
+                            return i + 1
+                        }
+                    } catch (e: IndexOutOfBoundsException) {
+                        cageList[i] = "!$name"
+                        return i + 1
+                    }
+                }
+            } catch (e: IndexOutOfBoundsException) {
+                cageList[i] = "!$name"
+                return i + 1
             }
-            cageList[i + 1] = name
-            return i + 2
         }
 
     }
