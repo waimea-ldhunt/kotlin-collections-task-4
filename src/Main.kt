@@ -306,7 +306,7 @@ fun showMonkeyCages(cageList: List<String>) {
     println("|")
 
     println(divider)
-    for ((i, name) in cageList.withIndex()) print("| ${name.padEnd(6)} ")
+    for ((i, name) in cageList.withIndex()) print("| ${colourName(name)} ")
     println("|")
 
     println(divider)
@@ -322,4 +322,15 @@ fun clearCage(cageList: MutableList<String>, cageNum: Int) {
     // Ok to clear the cage
     println("--- Clearing cage $cageNum")
     cageList[cageNum - 1] = EMPTY
+}
+
+
+fun colourName(name: String): String {
+    if (name.contains("!")) {
+        return "${name.padEnd(6)}".red()
+    } else if (name == EMPTY) {
+        return "${name.padEnd(6)}".blue()
+    } else {
+        return "${name.padEnd(6)}".green()
+    }
 }
